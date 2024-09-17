@@ -1,6 +1,7 @@
 # game/game_manager.py
 
 import pygame
+from .bank import Bank
 
 
 class GameManager:
@@ -19,6 +20,7 @@ class GameManager:
         if not hasattr(self, 'initialized'):
             self.initialized = True
             self.current_bank_level = 1  # Starting at "Small Town Bank:
+            self.current_bank = Bank("Small Town Bank", 1.0)
             self.screen = None  # Place holder for the game screen
             self.running = True  # Control the game loop
 
@@ -26,6 +28,7 @@ class GameManager:
         # Store the game screen for rendering
         self.screen = screen
         print("Game started at bank level: {self.current_bank_level}")
+        print(f" Current Bank Income: {self.current_bank.calculate_income()}")
 
     def run(self):
         # Main game loop
@@ -37,6 +40,12 @@ class GameManager:
             # Clear the screen
             self.screen.fill((255, 255, 255))
             # Reder the game elements here (e.g., current bank)
+
+            # Display bank info (Temporary for testing)
+            font = pygame.font.SysFont(None, 36)
+            text = font.render(
+                f"Bank: {self.current_bank.name}, Income: {self.current_bank.calculate_income()}", True, (0, 0, 0))
+            self.screen.blit(text, (20, 20))
 
             pygame.display.update()
 
