@@ -10,7 +10,7 @@ class GameManager:
     def __new__(cls, *args, **kwargs):
         # Implementing the Singleton pattern, Ensuring only one instance is created
         if cls._instance is None:
-            cls._instance = super(GameManger, cls).__new__(
+            cls._instance = super(GameManager, cls).__new__(
                 cls, *args, **kwargs)
         return cls._instance
 
@@ -19,7 +19,7 @@ class GameManager:
         if not hasattr(self, 'initialized'):
             self.initialized = True
             self.current_bank_level = 1  # Starting at "Small Town Bank:
-            self.screen - None  # Place holder for the game screen
+            self.screen = None  # Place holder for the game screen
             self.running = True  # Control the game loop
 
     def start_game(self, screen):
