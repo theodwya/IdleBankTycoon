@@ -6,3 +6,7 @@ __pycache__/
 
 # Ignore assets (to be added later)
 game/assets/*.png
+
+# Ignore build files creatd Buildozer
+.buildozer/
+bin/
