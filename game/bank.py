@@ -1,6 +1,7 @@
 # game/bank.py
 
 from .upgrade import Upgradeable
+from .ui import UpgradeButton
 
 
 class Bank:
@@ -12,6 +13,15 @@ class Bank:
         self.main_hall = self.create_main_hall()
         self.service_area = self.create_service_area()
         self.valut_room = self.create_valut_room()
+
+        # List to store upgrade buttons
+        self.upgrade_buttons = {
+            "marketing_office": [],
+            "main_hall": [],
+            "service_area": [],
+            "valut_room": []
+        }
+        self.create_upgrade_buttons()
 
     def create_marketing_office(self):
         # Create a list of upgradable items in the marketing office
@@ -52,10 +62,23 @@ class Bank:
             Upgradeable("Locker Room", 950, 185)
         ]
 
-    def calculate_income(self):
-        # Calculate income based on upgrades in all areas
-        income = 0
-        for area in [self.marketing_office, self.main_hall, self.service_area, self.valut_room]:
-            for item in area:
-                income += item.get_income_boost()
-        return income * self.income_multiplier
+    def create_upgrade_buttons(self):
+        # Create buttons for all upgradable items in the bank
+        for section, items in zip(['marketing_office', 'main_hall', 'service_area', 'valult_room'],
+                                  [self.marketing_office, self.main_hall, self.service_area, self.valut_room]):
+            y_offset = 100
+            for item in items:
+                button = UpgradeButton(item, 20, y_offset, 400, 50)
+                self.upgrade_buttons[section].append(button)
+                y_offset += 60
+
+    def draw_section(self, screen, section):
+        # Draw all upgrade buttons on the screen
+        for button in self.upgrade_buttons[section]:
+            button.draw(screen)
+
+    def handle_click(self, pos, section):
+        # Check if any button was clicked and perform the upgrade
+        for button in self.upgrade_buttons:
+            if button.is_clicked(pos):
+                button.upgrade()
